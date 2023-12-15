@@ -37,6 +37,9 @@ jobs:
                          
       - name: Pack Libraries
         run: msbuild -t:pack .\Skrrrt.Controls\Skrrrt.Controls.csproj -p:Configuration=Release -p:PackageVersion=${{ steps.get-file-version.outputs.result }}
+
+      - name: List NuGet Package
+        run: dir ./Skrrrt.Controls/bin/Release
           
       - name: Push
         env:
