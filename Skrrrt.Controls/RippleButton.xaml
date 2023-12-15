@@ -47,7 +47,17 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <!-- Main Canvas -->
-                        <Canvas x:Name="OuterCanvas" ClipToBounds="True">
+                        <Border x:Name="OuterCanvas" BorderThickness="0">
+                            <Border.Clip>
+                                <RectangleGeometry RadiusX="10" RadiusY="10">
+                                    <RectangleGeometry.Rect>
+                                        <MultiBinding Converter="{local:SizeToRectMultiConverter}">
+                                            <Binding Path="ActualWidth" ElementName="OuterCanvas"/>
+                                            <Binding Path="ActualHeight" ElementName="OuterCanvas"/>
+                                        </MultiBinding>
+                                    </RectangleGeometry.Rect>
+                                </RectangleGeometry>
+                            </Border.Clip>
                             <Canvas x:Name="Canvas"
                                     Width="{Binding ActualWidth, ElementName=OuterCanvas, Mode=OneWay}"
                                     Height="{Binding ActualHeight, ElementName=OuterCanvas, Mode=OneWay}"
@@ -83,7 +93,7 @@
                                     </Ellipse.RenderTransform>
                                 </Ellipse>
                             </Canvas>
-                        </Canvas>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
