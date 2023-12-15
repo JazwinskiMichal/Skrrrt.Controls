@@ -42,7 +42,7 @@ jobs:
         env:
           NUGET_PUSH_API_KEY: ${{ secrets.NUGET_PUSH_API_KEY }}
         run: |
-          $file=Get-Item *.nupkg
+          $file=Get-Item ./Skrrrt.Controls/bin/Release/*.nupkg
           $packageFilename = $file.Basename + $file.Extension
           dotnet nuget push $packageFilename --source https://api.nuget.org/v3/index.json --api-key ${env:NUGET_PUSH_API_KEY}
         
