@@ -45,7 +45,7 @@ jobs:
         env:
           NUGET_PUSH_API_KEY: ${{ secrets.NUGET_PUSH_API_KEY }}
         run: |
-          $file=Get-Item ./Skrrrt.Controls/bin/Release/*.nupkg
-          $packageFilename = $file.Basename + $file.Extension
-          dotnet nuget push $packageFilename --source https://api.nuget.org/v3/index.json --api-key ${env:NUGET_PUSH_API_KEY}
-        
+          $files = Get-ChildItem ./Skrrrt.Controls/bin/Release/*.nupkg
+          foreach ($file in $files) {
+          dotnet nuget push $file.FullName --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_PUSH_API_KEY
+          }
