@@ -1,0 +1,48 @@
+name: Push nuget
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  pack:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Setup Nuget
+        uses: NuGet/setup-nuget@v1.0.7
+
+      - name: Restore Nuget Packages
+        run: nuget restore Skrrrt.Controls.sln
+
+      - name: Navigate to Workspace
+        run: cd $GITHUB_WORKSPACE
+
+      - name: Create Build Directory
+        run: mkdir Release
+
+      - name: Build the Solution
+        run: msbuild Skrrrt.Controls.sln /p:Configuration=Release /p:DeployOnBuild=true /p:DeleteExistingFiles=True
+      
+      - name: Get Application version
+        id: get-file-version
+        uses: Amadevus/pwsh-script@v2.0.1
+        with:
+          script: return (Get-Command ./Skrrrt.Controls/bin/Release/net8.0-windows/Skrrrt.Controls.dll).FileVersionInfo.FileVersion
+                         
+      - name: Pack Libraries
+        run: nuget pack .\Skrrrt.Controls\Skrrrt.Controls.csproj -build -Properties Configuration=Release -Version ${{ steps.get-file-version.outputs.result }}
+          
+      - name: Push
+        env:
+          NUGET_PUSH_API_KEY: ${{ secrets.NUGET_PUSH_API_KEY }}
+        run: |
+          $file=Get-Item *.nupkg
+          $packageFilename = $file.Basename + $file.Extension
+          dotnet nuget push $packageFilename --source https://api.nuget.org/v3/index.json --api-key ${env:NUGET_PUSH_API_KEY}
+        

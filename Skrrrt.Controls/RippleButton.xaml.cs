@@ -4,7 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace Skrrrt.RippleButton
+namespace Skrrrt.Controls
 {
     /// <summary>
     /// Interaction logic for RippleButton.xaml

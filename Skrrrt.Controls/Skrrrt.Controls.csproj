@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+	<Company>MIHOW Michal Jazwinski</Company>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Title>Skrrrt RippleButton</Title>
+    <Description>WPF Button with RippleEffect</Description>
+    <RepositoryUrl>https://github.com/JazwinskiMichal/Skrrrt.Controls</RepositoryUrl>
+    <PackageTags>WPF;Button;RippleEffect</PackageTags>
+	<Version>1.0.0</Version>
+	<PackageIcon>logo.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
