@@ -36,7 +36,7 @@ jobs:
           script: return (Get-Command ./Skrrrt.Controls/bin/Release/net8.0-windows/Skrrrt.Controls.dll).FileVersionInfo.FileVersion
                          
       - name: Pack Libraries
-        run: nuget pack .\Skrrrt.Controls\Skrrrt.Controls.csproj -build -Properties Configuration=Release -Version ${{ steps.get-file-version.outputs.result }}
+        run: dotnet pack .\Skrrrt.Controls\Skrrrt.Controls.csproj -build -Properties Configuration=Release -Version ${{ steps.get-file-version.outputs.result }}
           
       - name: Push
         env:
