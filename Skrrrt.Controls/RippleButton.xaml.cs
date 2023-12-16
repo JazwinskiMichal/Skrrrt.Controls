@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
@@ -15,6 +16,13 @@ namespace Skrrrt.Controls
         private Point _mousePosition;
         private Ellipse _ellipse;
 
+        public static readonly DependencyProperty RippleBrushProperty = DependencyProperty.Register("RippleBrush", typeof(SolidColorBrush), typeof(RippleButton), new PropertyMetadata(new SolidColorBrush(Colors.Gray)));
+        public SolidColorBrush RippleBrush
+        {
+            get { return (SolidColorBrush)GetValue(RippleBrushProperty); }
+            set { SetValue(RippleBrushProperty, value); }
+        }
+
         public RippleButton()
         {
             InitializeComponent();
@@ -28,7 +36,8 @@ namespace Skrrrt.Controls
             Canvas _canvas = (Canvas)sender as Canvas;
             if (_canvas != null)
             {
-                // e.StylusDevice.Capture(_canvas);
+                // Remove the previous storyboard
+                _storyboard.Remove();
 
                 _mousePosition = e.GetPosition(_canvas);
 
